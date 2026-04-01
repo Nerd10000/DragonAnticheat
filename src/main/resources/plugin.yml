@@ -1,0 +1,10 @@
+main: ac.dragon.DragonAnticheat
+name: DragonAnticheat
+version: '2.0.0'
+description: An async anticheat made with ECS architecture for the maximum amount of performance!
+load: POSTWORLD
+author: DragonCraft64
+prefix: DragonAnticheat
+depend:
+- packetevents
+commands: 
