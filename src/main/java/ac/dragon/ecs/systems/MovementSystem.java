@@ -1,6 +1,7 @@
 package ac.dragon.ecs.systems;
 
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import com.github.retrooper.packetevents.event.PacketListener;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
@@ -24,11 +25,15 @@ public class MovementSystem implements PacketListener {
                 id -> new MovementComponent());
 
         Movement movement = new Movement();
+        Player p = event.getPlayer();
 
+        movement.block = p.getLocation().subtract(new Vector(0, 0.5, 0)).getBlock();
 
         movement.x = wrapper.getLocation().getX();
         movement.y = wrapper.getLocation().getY();
         movement.z = wrapper.getLocation().getZ();
+        movement.yaw = wrapper.getLocation().getYaw();
+        movement.pitch = wrapper.getLocation().getPitch();
 
         movement.onGround = wrapper.isOnGround();
 
@@ -36,16 +41,21 @@ public class MovementSystem implements PacketListener {
             movement.lastX = component.current.x;
             movement.lastY = component.current.y;
             movement.lastZ = component.current.z;
-
+            movement.lastYaw = component.current.yaw;
+            movement.lastPitch = component.current.pitch;
+            
             movement.deltaX = movement.x - movement.lastX;
             movement.deltaY = movement.y - movement.lastY;
             movement.deltaZ = movement.z - movement.lastZ;
+            movement.deltaYaw = movement.yaw - movement.lastYaw;
+            movement.deltaPitch = movement.pitch - movement.lastPitch;
 
             movement.previousDeltaX = component.current.deltaX;
             movement.previousDeltaY = component.current.deltaY;
             movement.previousDeltaZ = component.current.deltaZ;
+            movement.previousDeltaYaw = component.current.deltaYaw;
+            movement.previousDeltaPitch = component.current.deltaPitch;
         }
-
 
         component.previous = component.current;
         component.current = movement;
@@ -56,7 +66,6 @@ public class MovementSystem implements PacketListener {
             component.movementHistory.remove(0);
         }
 
-        
     }
 
 }

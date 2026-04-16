@@ -8,8 +8,10 @@ import ac.dragon.config.ConfigManager;
 import ac.dragon.ecs.EcsManager;
 import ac.dragon.ecs.systems.CheckSystem;
 import ac.dragon.ecs.systems.ClickSystem;
+import ac.dragon.ecs.systems.CompansationSystem;
 import ac.dragon.ecs.systems.JoinSystem;
 import ac.dragon.ecs.systems.MovementSystem;
+import ac.dragon.ecs.systems.TickSystem;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 
@@ -47,6 +49,8 @@ public class DragonAnticheat extends JavaPlugin {
     public void onLoad() {
         // Building, loading, and initializing the library is necessary when bundling.
         PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings()
+        .reEncodeByDefault(true);
         PacketEvents.getAPI().load();
 
         /*
@@ -79,12 +83,16 @@ public class DragonAnticheat extends JavaPlugin {
     }
 
     public void initEcs() {
+        TickSystem.timer();
+
         getServer().getPluginManager().registerEvents(new JoinSystem(), this);
         PacketEvents.getAPI().getEventManager().registerListener(new ClickSystem(), PacketListenerPriority.NORMAL);
         
         PacketEvents.getAPI().getEventManager().registerListener(new MovementSystem(), PacketListenerPriority.NORMAL);
         PacketEvents.getAPI().getEventManager().registerListener(new CheckSystem(), PacketListenerPriority.NORMAL);
         getLogger().info("Initializing the Check system...");
+
+        CompansationSystem.timer();
     }
 
     @Override

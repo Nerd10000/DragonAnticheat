@@ -10,8 +10,8 @@ import ac.dragon.utils.MathUtil;
 
 public class AutoClickerB extends Check {
 
-    public AutoClickerB(String name, int max) {
-        super(name, max);
+    public AutoClickerB(String name) {
+        super(name);
 
     }
 

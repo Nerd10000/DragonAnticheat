@@ -14,11 +14,10 @@ import ac.dragon.ecs.component.ClickComponent;
 
 public class AutoClickerC extends Check {
 
-    public AutoClickerC(String name, int max) {
-        super(name, max);
+    public AutoClickerC(String name) {
+        super(name);
 
     }
-
     @Override
     public void handleAttack(PacketReceiveEvent e, ClickComponent clicks, Player player) {
         // TODO Auto-generated method stub
@@ -28,8 +27,7 @@ public class AutoClickerC extends Check {
         clicks.deltaList.stream()
                 .filter(n -> !seen.add(n))
                 .forEach(duplicates::add);
-        player.sendMessage("Duplicates: §d" + duplicates + " full: §d" + clicks.deltaList);
-
+        
         if (duplicates.size() > (clicks.deltaList.size() * 0.5)) {
             increaseBuffer();
             if (buffer > 10) {

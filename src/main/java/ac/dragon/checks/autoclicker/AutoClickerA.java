@@ -23,8 +23,8 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class AutoClickerA extends Check {
    
-    public AutoClickerA(String name, int max) {
-		super(name, max);
+    public AutoClickerA(String name) {
+		super(name);
 		
 	}
     
@@ -32,7 +32,7 @@ public class AutoClickerA extends Check {
 	@Override
 	public void handleAttack(PacketReceiveEvent e, ClickComponent clicks, Player player) {
         if (clicks.cps > 16) {
-            player.sendRawMessage("fafafafsdf");
+           
             alert(player);
         }
 	}
