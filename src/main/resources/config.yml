@@ -3,15 +3,38 @@ prefix: "&5&lDragon &7|&r "
 format: "%prefix% %p% &dfailed &5%check% &7(&d%vl% &8/ &5%max%&7) &7# %description%"
 
 help_command:
-  - "&#D154F4&l&oD&#C855F0&l&or&#BF55EB&l&oa&#B656E7&l&og&#AD57E2&l&oo&#A458DE&l&on&#9B58D9&l&oA&#9359D5&l&on&#8A5AD1&l&ot&#815ACC&l&oi&#785BC8&l&oc&#6F5CC3&l&oh&#665DBF&l&oe&#5D5DBA&l&oa&#545EB6&l&ot&r &5Help "
+  - "&5&lDragon &8v&5%version%"
+  - " &7◆ &5ping &8— &7Shows your real ping according to transactions."
+  - " &7◆ &5toggle-debug &8— &7[DO NOT ENABLE IT] It shows debug values in debug builds."
   - " &7Coming soon..."
 
+incorrect_usage: "%prefix% &cIncorrect usage! For help run &8/dragon help&c!"
 
-
+check_config_format: "&8- &5&l%checkname%&r &7max_vL: &5%max_vl% &7maxBuffer: &5%max_buffer% &7decay: &5%decay%"
+config_command_header: "&5&lCheck settings: "
+reload_command: "%prefix% &5Reloaded the configuration file!"
 checks:
   Speed(A):
     max_vl: 10
-    max_buffer: 15
-    decay: 0.35
+    max_buffer: 20
+    decay: 0.15
     limit: 1e-4
+  Speed(B):
+    max_vl: 10
+    max_buffer: 20
+    decay: 0.15
+    limit1: 1e-5 # The limit before increasing the buffer when the player has not changed direction (yaw).
+    limit2: 0.099 # The limit before increasing the buffer when the player changed direction (yaw).
+
+
+  Aim(A):
+    max_vl: 1
+    max_buffer: 5
+    decay: 0.10
+
+  Fly(A):
+    max_vl: 4
+    max_buffer: 5
+    decay: 0.3
+
 

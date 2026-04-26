@@ -1,5 +1,6 @@
 package ac.dragon.ecs.systems;
 
+import ac.dragon.utils.TransactionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -12,6 +13,8 @@ public class TickSystem {
     public static void timer(){
         Bukkit.getScheduler().runTaskTimer(DragonAnticheat.getPlugin(), ()-> {
             for (Player p : Bukkit.getOnlinePlayers()){
+                TransactionUtils.sendPing(p);
+
                 TickComponent component = EcsManager.ticks.computeIfAbsent(p.getEntityId(), id -> new TickComponent());
                 component.count++;
 
@@ -20,8 +23,11 @@ public class TickSystem {
                 }
                 
                 component.history.add(System.currentTimeMillis());
+
+
+
             }
-        }, 0, 20L);
+        }, 0, 1L);
     }
 
 }

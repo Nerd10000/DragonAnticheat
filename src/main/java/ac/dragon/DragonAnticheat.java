@@ -3,27 +3,20 @@
  */
 package ac.dragon;
 
-import ac.dragon.checks.autoclicker.AutoClickerA;
+import ac.dragon.commands.MainCommand;
+import ac.dragon.commands.MainCommandAutoCompleter;
 import ac.dragon.config.ConfigManager;
-import ac.dragon.ecs.EcsManager;
-import ac.dragon.ecs.systems.CheckSystem;
-import ac.dragon.ecs.systems.ClickSystem;
-import ac.dragon.ecs.systems.CompansationSystem;
-import ac.dragon.ecs.systems.JoinSystem;
-import ac.dragon.ecs.systems.MovementSystem;
-import ac.dragon.ecs.systems.TickSystem;
+import ac.dragon.ecs.systems.*;
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-
-import java.util.HashMap;
-import java.util.UUID;
-
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import com.github.retrooper.packetevents.PacketEvents;
-import com.github.retrooper.packetevents.event.PacketListenerPriority;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class DragonAnticheat extends JavaPlugin {
 
@@ -31,6 +24,7 @@ public class DragonAnticheat extends JavaPlugin {
     private static ConfigManager configManager;
     private final static HashMap<UUID, Integer> ID_MAP = new HashMap<>();
     private static BukkitAudiences adventure;
+    public static boolean isDebugBuild = false;
 
     public static String BANNER = """
                 %c%
@@ -78,21 +72,28 @@ public class DragonAnticheat extends JavaPlugin {
         this.adventure = BukkitAudiences.create(this);
         initEcs();
 
+        getCommand("dragon")
+                .setExecutor(new MainCommand());
+
+        getCommand("dragon").setTabCompleter(new MainCommandAutoCompleter());
+
         // Initialize the library!
         PacketEvents.getAPI().init();
     }
 
     public void initEcs() {
         TickSystem.timer();
-
+        CompansationSystem.timer();
         getServer().getPluginManager().registerEvents(new JoinSystem(), this);
+        PacketEvents.getAPI().getEventManager().registerListener(new TransactionSystem(), PacketListenerPriority.NORMAL);
         PacketEvents.getAPI().getEventManager().registerListener(new ClickSystem(), PacketListenerPriority.NORMAL);
         
         PacketEvents.getAPI().getEventManager().registerListener(new MovementSystem(), PacketListenerPriority.NORMAL);
         PacketEvents.getAPI().getEventManager().registerListener(new CheckSystem(), PacketListenerPriority.NORMAL);
+
         getLogger().info("Initializing the Check system...");
 
-        CompansationSystem.timer();
+
     }
 
     @Override

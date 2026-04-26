@@ -7,13 +7,14 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    application
+    java
     id("com.gradleup.shadow") version "9.3.0"
 }
+project.version = "2.0.0"
 
 repositories {
     // Use Maven Central for resolving dependencies.
-    
+
     maven("https://hub.spigotmc.org/nexus/content/groups/public/")
     maven { url = uri("https://repo.codemc.io/repository/maven-releases/") }
     mavenCentral()
@@ -25,7 +26,7 @@ dependencies {
     implementation("net.kyori:adventure-api:4.26.1")
     implementation("net.kyori:adventure-platform-bukkit:4.4.1")
     implementation("net.kyori:adventure-text-serializer-legacy:4.26.1")
-     compileOnly("com.github.retrooper:packetevents-spigot:2.11.2")
+    implementation("com.github.retrooper:packetevents-spigot:2.12.1")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -35,10 +36,11 @@ java {
     }
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = "dragonanticheat.App"
+tasks.build {
+    dependsOn("shadowJar")
 }
 
+tasks.shadowJar {
+    archiveClassifier.set("nightly")
 
-
+}

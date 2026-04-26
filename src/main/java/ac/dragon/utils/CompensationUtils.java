@@ -1,19 +1,17 @@
 package ac.dragon.utils;
 
-import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import ac.dragon.ecs.EcsManager;
 import ac.dragon.utils.data.WorldSnapshot;
+import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class CompensationUtils {
     // Compensation logic
     public static  int estimateTicks(Player player) {
-        //This .getPing() is  inaccurate but works for testing-
-        double ping = player.getPing();
 
-    
+        double ping = TransactionUtils.getPing(player);
+
         double latency = ping * 0.5;
 
       

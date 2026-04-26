@@ -1,15 +1,13 @@
 package ac.dragon.ecs.systems;
 
-import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
-import com.github.retrooper.packetevents.event.PacketListener;
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
-import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
-
 import ac.dragon.ecs.EcsManager;
 import ac.dragon.ecs.component.MovementComponent;
 import ac.dragon.utils.data.Movement;
+import com.github.retrooper.packetevents.event.PacketListener;
+import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import com.github.retrooper.packetevents.wrapper.play.client.WrapperPlayClientPlayerFlying;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class MovementSystem implements PacketListener {
 
@@ -32,8 +30,8 @@ public class MovementSystem implements PacketListener {
         movement.x = wrapper.getLocation().getX();
         movement.y = wrapper.getLocation().getY();
         movement.z = wrapper.getLocation().getZ();
-        movement.yaw = wrapper.getLocation().getYaw();
-        movement.pitch = wrapper.getLocation().getPitch();
+        movement.yaw = p.getLocation().getYaw();
+        movement.pitch = p.getLocation().getPitch();
 
         movement.onGround = wrapper.isOnGround();
 
@@ -55,6 +53,8 @@ public class MovementSystem implements PacketListener {
             movement.previousDeltaZ = component.current.deltaZ;
             movement.previousDeltaYaw = component.current.deltaYaw;
             movement.previousDeltaPitch = component.current.deltaPitch;
+
+
         }
 
         component.previous = component.current;

@@ -1,16 +1,12 @@
 package ac.dragon.checks;
 
-import org.bukkit.entity.Player;
-
-import com.github.retrooper.packetevents.event.PacketReceiveEvent;
-import com.github.retrooper.packetevents.protocol.player.User;
-
 import ac.dragon.DragonAnticheat;
-import ac.dragon.config.ConfigManager;
 import ac.dragon.config.ConfigOptions;
 import ac.dragon.ecs.component.ClickComponent;
 import ac.dragon.ecs.component.MovementComponent;
 import ac.dragon.utils.TextUtils;
+import com.github.retrooper.packetevents.event.PacketReceiveEvent;
+import org.bukkit.entity.Player;
 
 public abstract class Check {
     private String name;
@@ -38,8 +34,11 @@ public abstract class Check {
 
         if (vl > max) {
             vl = 0;
+
         }
+        System.out.println();
     }
+
 
     public void setDescription(String x) {
         this.description = x;
@@ -79,5 +78,25 @@ public abstract class Check {
 
     public Object getSetting(String path){
         return DragonAnticheat.getPlugin().getConfig().get(String.format("checks.%s.%s", name,path));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getVl() {
+        return vl;
+    }
+
+    public double getBuffer() {
+        return buffer;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

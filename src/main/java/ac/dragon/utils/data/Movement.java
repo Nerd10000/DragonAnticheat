@@ -8,7 +8,7 @@ public class Movement {
     public float yaw, lastYaw, pitch, lastPitch;
     public float deltaYaw, deltaPitch, previousDeltaYaw, previousDeltaPitch;
     public boolean onGround, isInAir, isInWater, isInLava;
-    public boolean flag;  
-
+    public boolean flag;
+    public int tickSinceJump;
     public Block block;
 }

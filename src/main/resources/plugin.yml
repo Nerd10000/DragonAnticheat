@@ -6,6 +6,7 @@ description: An async anticheat made with ECS architecture for the maximum amoun
 load: POSTWORLD
 author: DragonCraft64
 prefix: DragonAnticheat
-depend:
-- packetevents
-commands: 
+
+commands:
+  dragon:
+    description: "Shows you your ping!"
